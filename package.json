@@ -1,0 +1,40 @@
+{
+  "name": "adserver-resolver",
+  "version": "0.0.1",
+  "description": "The resolver for VTEX's Ad Server GraphQL schema.",
+  "main": "node/index.ts",
+  "repository": "git@github.com:vtex-apps/adserver-resolver.git",
+  "author": "Henrique Caúla <henrique.caula@vtex.com.br>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "lint": "eslint --ext js,jsx,ts,tsx .",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\"",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js,tsx,jsx}": [
+      "prettier --write",
+      "yarn lint --fix"
+    ],
+    "*.{json,graphql,gql}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.5.0",
+    "@vtex/prettier-config": "^1.0.0",
+    "eslint": "^8.47.0",
+    "eslint-config-vtex": "^15.0.2",
+    "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.0",
+    "prettier": "^3.0.2",
+    "typescript": "^5.1.6"
+  }
+}

@@ -1,0 +1,19 @@
+name: IO actions
+
+on: [pull_request]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Run Node tests
+        run: |
+          cd node
+          yarn
+          yarn test --passWithNoTests

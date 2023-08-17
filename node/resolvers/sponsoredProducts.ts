@@ -3,13 +3,13 @@ export async function sponsoredProducts(
   args: SearchParams,
   __: Context
 ): Promise<SponsoredProduct[]> {
-  if (args.query === "top") {
+  if (args.query === 'top') {
     return [
       {
         productId: '8',
-        rule: { id: "myPromotedProduct" },
+        rule: { id: 'myPromotedProduct' },
       },
-    ];
+    ]
   }
 
   return []
