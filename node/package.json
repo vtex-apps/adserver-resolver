@@ -1,18 +1,37 @@
 {
-  "name": "is-api-middleware-resolver",
+  "name": "adserver-resolver",
   "private": true,
   "license": "UNLICENSED",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.(spec|test).(js|ts)?(x)",
+      "**/?(*.)+(spec|test).(js|ts)?(x)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  },
   "dependencies": {
-    "@vtex/clients": "^2.19.5",
+    "@vtex/clients": "^2.21.0",
     "graphql": "^14.5.8",
-    "graphql-tools": "^4.0.6",
     "vtex.is-api-middleware-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.adserver-graphql@0.0.1/public"
   },
   "devDependencies": {
     "@types/atob": "^2.1.2",
+    "@types/jest": "^27.0.3",
     "@types/node": "^12.12.21",
     "@vtex/api": "6.45.19",
     "@vtex/tsconfig": "^0.5.6",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
     "typescript": "3.9.7"
   },
   "resolutions": {
