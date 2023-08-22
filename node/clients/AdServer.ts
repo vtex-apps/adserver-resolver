@@ -7,8 +7,7 @@ import type {
 } from '../typings/AdServer'
 
 class AdServer extends ExternalClient {
-  // TODO: update this URL when the Ad Server is in production
-  public static BASE_URL = 'http://localhost:8080'
+  public static BASE_URL = 'https://ad-server.vtex.systems'
 
   constructor(ctx: IOContext, options?: InstanceOptions) {
     super(AdServer.BASE_URL, ctx, { ...options })
