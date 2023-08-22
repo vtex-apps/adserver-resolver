@@ -1,10 +1,7 @@
 import type { InstanceOptions, IOContext } from '@vtex/api'
 import { ExternalClient } from '@vtex/api'
 
-import type {
-  GetSponsoredProductsRequest,
-  GetSponsoredProductsResponse,
-} from '../typings/AdServer'
+import type { AdServerRequest, AdServerResponse } from '../typings/AdServer'
 
 class AdServer extends ExternalClient {
   public static BASE_URL = 'https://ad-server.vtex.systems'
@@ -14,8 +11,8 @@ class AdServer extends ExternalClient {
   }
 
   public getSponsoredProducts(
-    body: GetSponsoredProductsRequest
-  ): Promise<GetSponsoredProductsResponse> {
+    body: AdServerRequest
+  ): Promise<AdServerResponse> {
     return this.http.post('/api/v1/sponsored-products', {
       accountName: this.context.account,
       ...body,

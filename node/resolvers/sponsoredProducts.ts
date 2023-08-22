@@ -27,16 +27,19 @@ export async function sponsoredProducts(
   _: unknown,
   args: SearchParams,
   ctx: Context
-): Promise<SponsoredProduct[]> {
-  if (!showSponsoredProducts(args)) return []
+): Promise<AdResponse> {
+  if (!showSponsoredProducts(args)) return { sponsoredProducts: [] }
 
   const adResponse = await ctx.clients.adServer.getSponsoredProducts({
     count: SPONSORED_PRODUCTS_COUNT,
     searchParams: getSearchParams(args),
   })
 
-  return adResponse.sponsoredProducts.map(({ productId }) => ({
-    productId,
-    rule: { id: RULE_ID },
-  }))
+  return {
+    ...adResponse,
+    sponsoredProducts: adResponse.sponsoredProducts.map((product) => ({
+      ...product,
+      rule: { id: RULE_ID },
+    })),
+  }
 }
