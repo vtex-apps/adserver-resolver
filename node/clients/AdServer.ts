@@ -13,6 +13,19 @@ class AdServer extends ExternalClient {
   public getSponsoredProducts(
     body: AdServerRequest
   ): Promise<AdServerResponse> {
+    return Promise.resolve({
+      adResponseId: '65daf770-e255-4ca1-b50e-5f24ee6a6d56',
+      adRequestId: '07017094-3dfa-4bda-86b3-9f17550b289f',
+      sponsoredProducts: [
+        {
+          productId: '53793',
+          campaignId: '3add0f42-3b09-4506-b86f-3df802486b1c',
+          adId: '77a33755-08cb-40ff-b5e3-992eddd0c6fb',
+          actionCost: 0.32,
+        },
+      ],
+    })
+
     return this.http.post('/api/v1/sponsored-products', {
       accountName: this.context.account,
       ...body,
