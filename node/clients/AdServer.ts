@@ -5,6 +5,7 @@ import type { AdServerRequest, AdServerResponse } from '../typings/AdServer'
 
 const accountToId: Record<string, string> = {
   extrafarmav2: '53793',
+  paguemenos: '53793',
   storecomponents: '14',
 }
 
