@@ -22,11 +22,14 @@ describe('query sponsoredProducts', () => {
   const query = resolvers.Query.sponsoredProducts
 
   describe('when the shopper is sorting products by relevance', () => {
-    const expectedResponse = getSponsoredProductsResponse.sponsoredProducts.map(
-      ({ productId }) => ({ productId, rule: { id: 'sponsoredProduct' } })
-    )
+    const expectedResponse = {
+      ...getSponsoredProductsResponse,
+      sponsoredProducts: getSponsoredProductsResponse.sponsoredProducts.map(
+        ({ productId }) => ({ productId, rule: { id: 'sponsoredProduct' } })
+      ),
+    }
 
-    it('queries the Ad Server and returns the sponsored products', async () => {
+    it('queries the Ad Server and returns the ad response', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const result = await query({}, defaultVariables, mockContext as any)
 
@@ -39,16 +42,18 @@ describe('query sponsoredProducts', () => {
   })
 
   describe('when the shopper is sorting products by something other than relevance', () => {
+    const expectedResponse = { sponsoredProducts: [] }
+
     const variables = {
       ...defaultVariables,
       sort: 'OrderByTopSaleDESC',
     }
 
-    it('returns an empty list', async () => {
+    it('returns an empty list as sponsored products', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const result = await query({}, variables, mockContext as any)
 
-      expect(result).toHaveLength(0)
+      expect(result).toMatchObject(expectedResponse)
     })
   })
 })

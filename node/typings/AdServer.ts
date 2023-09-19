@@ -1,10 +1,10 @@
-export type GetSponsoredProductsRequest = {
+export type AdServerRequest = {
   accountName?: string
   count: number
   searchParams: AdServerSearchParams
 }
 
-export type GetSponsoredProductsResponse = {
+export type AdServerResponse = {
   adRequestId: string
   adResponseId: string
   sponsoredProducts: SponsoredProduct[]

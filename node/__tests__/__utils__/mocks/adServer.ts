@@ -1,6 +1,6 @@
-import type { GetSponsoredProductsResponse } from '../../../typings/AdServer'
+import type { AdServerResponse } from '../../../typings/AdServer'
 
-export const getSponsoredProductsResponse: GetSponsoredProductsResponse = {
+export const getSponsoredProductsResponse: AdServerResponse = {
   adRequestId: 'adRequestId',
   adResponseId: 'adResponseId',
   sponsoredProducts: [

@@ -13,13 +13,18 @@
   "policies": [
     {
       "name": "vbase-read-write"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "ad-server.vtex.systems",
+        "path": "/api/v1/sponsored-products"
+      }
     }
   ],
   "billingOptions": {
     "free": true,
-    "availableCountries": [
-      "*"
-    ]
+    "availableCountries": ["*"]
   },
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }

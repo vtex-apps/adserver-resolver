@@ -56,10 +56,9 @@ declare global {
     customPluginInfo?: string
   }
 
-  type SponsoredProduct = {
-    productId: string
-    rule: {
-      id: string
-    }
+  type AdResponse = {
+    adRequestId?: string
+    adResponseId?: string
+    sponsoredProducts: SponsoredProduct[]
   }
 }
