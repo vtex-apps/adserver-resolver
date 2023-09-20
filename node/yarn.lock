@@ -753,10 +753,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@vtex/api@6.45.19":
-  version "6.45.19"
-  resolved "https://registry.yarnpkg.com/@vtex/api/-/api-6.45.19.tgz#97b449850b517d6610e7123aa91caec2a29ae7b1"
-  integrity sha512-WUsAn1Oi+Z7Ih84DcRf4HQH85Mh+zO84L0ta7zuRyb13DoAEq2qMi0Mv6vZMd9BFWOCSD8AcTHVF/gZskwh9Yw==
+"@vtex/api@6.45.21":
+  version "6.45.21"
+  resolved "https://registry.yarnpkg.com/@vtex/api/-/api-6.45.21.tgz#2f5ea4a14dfbf426f6fbad140caf23c89060b313"
+  integrity sha512-Yo4og5bSM1n5WSQ3u8nsqEHicvxdyOZX3uA0KtQHbS4frSeA4hcGRuupsFHQ13eZZGMy4OR4fJO7ZQfkj8qLhQ==
   dependencies:
     "@types/koa" "^2.11.0"
     "@types/koa-compose" "^3.2.3"
