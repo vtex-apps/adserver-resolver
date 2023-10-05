@@ -57,8 +57,24 @@ declare global {
   }
 
   type AdResponse = {
-    adRequestId?: string
-    adResponseId?: string
     sponsoredProducts: SponsoredProduct[]
+  }
+
+  type SponsoredProduct = {
+    productId: string
+    rule: Rule
+    advertisement?: Advertisement
+  }
+
+  type Rule = {
+    id: string
+  }
+
+  type Advertisement = {
+    campaignId: string
+    adId: string
+    actionCost: number
+    adRequestId: string
+    adResponseId: string
   }
 }

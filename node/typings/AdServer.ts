@@ -7,7 +7,7 @@ export type AdServerRequest = {
 export type AdServerResponse = {
   adRequestId: string
   adResponseId: string
-  sponsoredProducts: SponsoredProduct[]
+  sponsoredProducts: AdServerSponsoredProduct[]
 }
 
 export type AdServerSearchParams = Pick<SearchParams, AdServerSearchParamsKeys>
@@ -20,7 +20,7 @@ type AdServerSearchParamsKeys =
   | 'searchState'
   | 'selectedFacets'
 
-type SponsoredProduct = {
+type AdServerSponsoredProduct = {
   campaignId: string
   adId: string
   productId: string

@@ -23,9 +23,18 @@ describe('query sponsoredProducts', () => {
 
   describe('when the shopper is sorting products by relevance', () => {
     const expectedResponse = {
-      ...getSponsoredProductsResponse,
       sponsoredProducts: getSponsoredProductsResponse.sponsoredProducts.map(
-        ({ productId }) => ({ productId, rule: { id: 'sponsoredProduct' } })
+        ({ productId, campaignId, adId, actionCost }) => ({
+          productId,
+          rule: { id: 'sponsoredProduct' },
+          advertisement: {
+            campaignId,
+            adId,
+            actionCost,
+            adRequestId: getSponsoredProductsResponse.adRequestId,
+            adResponseId: getSponsoredProductsResponse.adResponseId,
+          },
+        })
       ),
     }
 
