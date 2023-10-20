@@ -5,7 +5,7 @@ import type {
 import compact from '../utils/compact'
 
 const RULE_ID = 'sponsoredProduct'
-const PRODUCT_UNIQUE_IDENTIFIER_FIELD = 'id'
+const PRODUCT_UNIQUE_IDENTIFIER_FIELD = 'product'
 const SPONSORED_PRODUCTS_COUNT = 2
 const RELEVANCE_DESC_SORT_STR = 'orderbyscoredesc'
 

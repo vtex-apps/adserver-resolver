@@ -26,7 +26,7 @@ describe('query sponsoredProducts', () => {
       ({ productId, campaignId, adId, actionCost }) => ({
         productId,
         identifier: {
-          field: 'id',
+          field: 'product',
           value: productId,
         },
         rule: { id: 'sponsoredProduct' },

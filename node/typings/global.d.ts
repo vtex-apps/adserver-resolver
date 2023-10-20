@@ -68,7 +68,7 @@ declare global {
     value: string
   }
 
-  type ProductUniqueIdentifierField = 'id' | 'sku'
+  type ProductUniqueIdentifierField = 'anuId' | 'skuId' | 'product'
 
   type Rule = {
     id: string
