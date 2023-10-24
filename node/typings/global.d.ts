@@ -56,9 +56,29 @@ declare global {
     customPluginInfo?: string
   }
 
-  type AdResponse = {
-    adRequestId?: string
-    adResponseId?: string
-    sponsoredProducts: SponsoredProduct[]
+  type SponsoredProduct = {
+    productId: string
+    identifier: ProductUniqueIdentifier
+    rule: Rule
+    advertisement?: Advertisement
+  }
+
+  type ProductUniqueIdentifier = {
+    field: ProductUniqueIdentifierField
+    value: string
+  }
+
+  type ProductUniqueIdentifierField = 'anuId' | 'skuId' | 'product'
+
+  type Rule = {
+    id: string
+  }
+
+  type Advertisement = {
+    campaignId: string
+    adId: string
+    actionCost: number
+    adRequestId: string
+    adResponseId: string
   }
 }

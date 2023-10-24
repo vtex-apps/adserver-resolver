@@ -22,12 +22,23 @@ describe('query sponsoredProducts', () => {
   const query = resolvers.Query.sponsoredProducts
 
   describe('when the shopper is sorting products by relevance', () => {
-    const expectedResponse = {
-      ...getSponsoredProductsResponse,
-      sponsoredProducts: getSponsoredProductsResponse.sponsoredProducts.map(
-        ({ productId }) => ({ productId, rule: { id: 'sponsoredProduct' } })
-      ),
-    }
+    const expectedResponse = getSponsoredProductsResponse.sponsoredProducts.map(
+      ({ productId, campaignId, adId, actionCost }) => ({
+        productId,
+        identifier: {
+          field: 'product',
+          value: productId,
+        },
+        rule: { id: 'sponsoredProduct' },
+        advertisement: {
+          campaignId,
+          adId,
+          actionCost,
+          adRequestId: getSponsoredProductsResponse.adRequestId,
+          adResponseId: getSponsoredProductsResponse.adResponseId,
+        },
+      })
+    )
 
     it('queries the Ad Server and returns the ad response', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,7 +53,7 @@ describe('query sponsoredProducts', () => {
   })
 
   describe('when the shopper is sorting products by something other than relevance', () => {
-    const expectedResponse = { sponsoredProducts: [] }
+    const expectedResponse: SponsoredProduct[] = []
 
     const variables = {
       ...defaultVariables,

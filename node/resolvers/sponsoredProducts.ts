@@ -1,7 +1,11 @@
-import type { AdServerSearchParams } from '../typings/AdServer'
+import type {
+  AdServerResponse,
+  AdServerSearchParams,
+} from '../typings/AdServer'
 import compact from '../utils/compact'
 
 const RULE_ID = 'sponsoredProduct'
+const PRODUCT_UNIQUE_IDENTIFIER_FIELD = 'product'
 const SPONSORED_PRODUCTS_COUNT = 2
 const RELEVANCE_DESC_SORT_STR = 'orderbyscoredesc'
 
@@ -23,23 +27,45 @@ const getSearchParams = (args: SearchParams): AdServerSearchParams => {
   return compact(adServerSearchParams)
 }
 
+const mapSponsoredProduct = (
+  adResponse: AdServerResponse
+): SponsoredProduct[] => {
+  if (!adResponse?.sponsoredProducts) return []
+
+  return adResponse.sponsoredProducts?.map(
+    ({ productId, campaignId, adId, actionCost }) => {
+      const advertisement = {
+        campaignId,
+        adId,
+        actionCost,
+        adRequestId: adResponse?.adRequestId,
+        adResponseId: adResponse?.adResponseId,
+      }
+
+      return {
+        productId,
+        identifier: {
+          field: PRODUCT_UNIQUE_IDENTIFIER_FIELD,
+          value: productId,
+        },
+        rule: { id: RULE_ID },
+        advertisement,
+      }
+    }
+  )
+}
+
 export async function sponsoredProducts(
   _: unknown,
   args: SearchParams,
   ctx: Context
-): Promise<AdResponse> {
-  if (!showSponsoredProducts(args)) return { sponsoredProducts: [] }
+): Promise<SponsoredProduct[]> {
+  if (!showSponsoredProducts(args)) return []
 
   const adResponse = await ctx.clients.adServer.getSponsoredProducts({
     count: SPONSORED_PRODUCTS_COUNT,
     searchParams: getSearchParams(args),
   })
 
-  return {
-    ...adResponse,
-    sponsoredProducts: adResponse.sponsoredProducts.map((product) => ({
-      ...product,
-      rule: { id: RULE_ID },
-    })),
-  }
+  return mapSponsoredProduct(adResponse)
 }
