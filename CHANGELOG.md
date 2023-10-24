@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.5.0] - 2023-10-24
+
 ### Changed
 
 - Satisfies the new adserver-graphql schema, adding the advertisement field into the sponsored product directly.
