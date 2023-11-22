@@ -21,50 +21,32 @@ const defaultVariables = {
 describe('query sponsoredProducts', () => {
   const query = resolvers.Query.sponsoredProducts
 
-  describe('when the shopper is sorting products by relevance', () => {
-    const expectedResponse = getSponsoredProductsResponse.sponsoredProducts.map(
-      ({ productId, campaignId, adId, actionCost }) => ({
-        productId,
-        identifier: {
-          field: 'product',
-          value: productId,
-        },
-        rule: { id: 'sponsoredProduct' },
-        advertisement: {
-          campaignId,
-          adId,
-          actionCost,
-          adRequestId: getSponsoredProductsResponse.adRequestId,
-          adResponseId: getSponsoredProductsResponse.adResponseId,
-        },
-      })
-    )
-
-    it('queries the Ad Server and returns the ad response', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const result = await query({}, defaultVariables, mockContext as any)
-
-      expect(getSponsoredProductsSpy).toHaveBeenCalledWith({
-        count: 2,
-        searchParams: { query: 'shoes' },
-      })
-      expect(result).toMatchObject(expectedResponse)
+  const expectedResponse = getSponsoredProductsResponse.sponsoredProducts.map(
+    ({ productId, campaignId, adId, actionCost }) => ({
+      productId,
+      identifier: {
+        field: 'product',
+        value: productId,
+      },
+      rule: { id: 'sponsoredProduct' },
+      advertisement: {
+        campaignId,
+        adId,
+        actionCost,
+        adRequestId: getSponsoredProductsResponse.adRequestId,
+        adResponseId: getSponsoredProductsResponse.adResponseId,
+      },
     })
-  })
+  )
 
-  describe('when the shopper is sorting products by something other than relevance', () => {
-    const expectedResponse: SponsoredProduct[] = []
+  it('queries the Ad Server and returns the ad response', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = await query({}, defaultVariables, mockContext as any)
 
-    const variables = {
-      ...defaultVariables,
-      sort: 'OrderByTopSaleDESC',
-    }
-
-    it('returns an empty list as sponsored products', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const result = await query({}, variables, mockContext as any)
-
-      expect(result).toMatchObject(expectedResponse)
+    expect(getSponsoredProductsSpy).toHaveBeenCalledWith({
+      count: 2,
+      searchParams: { query: 'shoes' },
     })
+    expect(result).toMatchObject(expectedResponse)
   })
 })
