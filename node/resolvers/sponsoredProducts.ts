@@ -33,13 +33,14 @@ const mapSponsoredProduct = (
   if (!adResponse?.sponsoredProducts) return []
 
   return adResponse.sponsoredProducts?.map(
-    ({ productId, campaignId, adId, actionCost }) => {
+    ({ productId, campaignId, adId, actionCost, options }) => {
       const advertisement = {
         campaignId,
         adId,
         actionCost,
         adRequestId: adResponse?.adRequestId,
         adResponseId: adResponse?.adResponseId,
+        options,
       }
 
       return {

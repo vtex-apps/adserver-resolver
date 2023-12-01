@@ -9,6 +9,9 @@ export const getSponsoredProductsResponse: AdServerResponse = {
       campaignId: 'campaignId',
       adId: 'adId',
       actionCost: 0.32,
+      options: {
+        hideSponsoredBadge: true,
+      },
     },
   ],
 }

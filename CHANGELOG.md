@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Pass the `options` field from the AdServer.
+
 ## [0.5.0] - 2023-10-24
 
 ### Changed

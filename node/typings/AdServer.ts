@@ -25,4 +25,9 @@ type AdServerSponsoredProduct = {
   adId: string
   productId: string
   actionCost: number
+  options?: Options
+}
+
+type Options = {
+  hideSponsoredBadge?: boolean
 }

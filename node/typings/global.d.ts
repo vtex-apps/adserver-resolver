@@ -80,5 +80,10 @@ declare global {
     actionCost: number
     adRequestId: string
     adResponseId: string
+    options?: AdvertisementOptions
+  }
+
+  type AdvertisementOptions = {
+    hideSponsoredBadge?: boolean
   }
 }

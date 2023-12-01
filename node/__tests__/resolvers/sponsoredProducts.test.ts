@@ -23,7 +23,7 @@ describe('query sponsoredProducts', () => {
 
   describe('when the shopper is sorting products by relevance', () => {
     const expectedResponse = getSponsoredProductsResponse.sponsoredProducts.map(
-      ({ productId, campaignId, adId, actionCost }) => ({
+      ({ productId, campaignId, adId, actionCost, options }) => ({
         productId,
         identifier: {
           field: 'product',
@@ -36,6 +36,7 @@ describe('query sponsoredProducts', () => {
           actionCost,
           adRequestId: getSponsoredProductsResponse.adRequestId,
           adResponseId: getSponsoredProductsResponse.adResponseId,
+          options,
         },
       })
     )
