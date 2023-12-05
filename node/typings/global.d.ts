@@ -54,6 +54,7 @@ declare global {
     dynamicRules?: DynamicRule[]
     searchState?: string
     customPluginInfo?: string
+    anonymousId?: string
   }
 
   type SponsoredProduct = {
