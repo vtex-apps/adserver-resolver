@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Send `anonymousId` as `userId` to ad server. This is used on A/B testing.
+
 ## [0.6.1] - 2023-12-04
 
 ## [0.6.0] - 2023-12-01
