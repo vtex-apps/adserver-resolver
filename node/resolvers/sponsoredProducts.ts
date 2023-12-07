@@ -66,6 +66,7 @@ export async function sponsoredProducts(
   const adResponse = await ctx.clients.adServer.getSponsoredProducts({
     count: SPONSORED_PRODUCTS_COUNT,
     searchParams: getSearchParams(args),
+    userId: args.anonymousId,
   })
 
   return mapSponsoredProduct(adResponse)

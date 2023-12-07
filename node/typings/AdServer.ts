@@ -2,6 +2,7 @@ export type AdServerRequest = {
   accountName?: string
   count: number
   searchParams: AdServerSearchParams
+  userId?: string
 }
 
 export type AdServerResponse = {
