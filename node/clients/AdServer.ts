@@ -6,6 +6,10 @@ import type { AdServerRequest, AdServerResponse } from '../typings/AdServer'
 class AdServer extends ExternalClient {
   public static BASE_URL = 'https://ad-server.vtex.systems'
 
+  public static ERROR_MESSAGES = {
+    AD_NOT_FOUND: 'Ad not found',
+  }
+
   constructor(ctx: IOContext, options?: InstanceOptions) {
     super(AdServer.BASE_URL, ctx, { ...options })
   }
