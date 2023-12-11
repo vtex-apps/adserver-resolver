@@ -1,3 +1,4 @@
+import AdServer from '../clients/AdServer'
 import type {
   AdServerResponse,
   AdServerSearchParams,
@@ -63,11 +64,17 @@ export async function sponsoredProducts(
 ): Promise<SponsoredProduct[]> {
   if (!showSponsoredProducts(args)) return []
 
-  const adResponse = await ctx.clients.adServer.getSponsoredProducts({
-    count: SPONSORED_PRODUCTS_COUNT,
-    searchParams: getSearchParams(args),
-    userId: args.anonymousId,
-  })
+  try {
+    const adResponse = await ctx.clients.adServer.getSponsoredProducts({
+      count: SPONSORED_PRODUCTS_COUNT,
+      searchParams: getSearchParams(args),
+      userId: args.anonymousId,
+    })
 
-  return mapSponsoredProduct(adResponse)
+    return mapSponsoredProduct(adResponse)
+  } catch (error) {
+    if (error.response?.data === AdServer.ERROR_MESSAGES.AD_NOT_FOUND) return []
+
+    throw error
+  }
 }
