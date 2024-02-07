@@ -1,7 +1,7 @@
 {
   "vendor": "vtex",
   "name": "adserver-resolver",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "title": "adserver resolver",
   "description": "Adserver resolver",
   "builders": {
@@ -31,7 +31,9 @@
   ],
   "billingOptions": {
     "free": true,
-    "availableCountries": ["*"]
+    "availableCountries": [
+      "*"
+    ]
   },
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }
