@@ -13,13 +13,7 @@ export type AdServerResponse = {
 
 export type AdServerSearchParams = Pick<SearchParams, AdServerSearchParamsKeys>
 
-type AdServerSearchParamsKeys =
-  | 'query'
-  | 'regionId'
-  | 'operator'
-  | 'fuzzy'
-  | 'searchState'
-  | 'selectedFacets'
+type AdServerSearchParamsKeys = 'query' | 'selectedFacets'
 
 type AdServerSponsoredProduct = {
   campaignId: string

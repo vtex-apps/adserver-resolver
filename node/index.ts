@@ -1,7 +1,6 @@
-// eslint-disable-next-line prettier/prettier
 import type { ParamsContext, RecorderState } from '@vtex/api'
 import { Service } from '@vtex/api'
-import schema from 'vtex.is-api-middleware-graphql/graphql'
+import schema from 'vtex.adserver-graphql/graphql'
 
 import { Clients } from './clients'
 import { resolvers } from './resolvers'

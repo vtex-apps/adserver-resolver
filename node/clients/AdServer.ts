@@ -17,6 +17,11 @@ class AdServer extends ExternalClient {
   public getSponsoredProducts(
     body: AdServerRequest
   ): Promise<AdServerResponse> {
+    if (process.env.VTEX_APP_LINK) {
+      // eslint-disable-next-line no-console
+      console.log(JSON.stringify(body, null, 2))
+    }
+
     return this.http.post('/api/v1/sponsored-products', {
       accountName: this.context.account,
       ...body,

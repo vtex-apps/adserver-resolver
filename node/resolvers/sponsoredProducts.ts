@@ -4,6 +4,7 @@ import type {
   AdServerSearchParams,
 } from '../typings/AdServer'
 import compact from '../utils/compact'
+import region from '../utils/region'
 
 const RULE_ID = 'sponsoredProduct'
 const PRODUCT_UNIQUE_IDENTIFIER_FIELD = 'product'
@@ -15,14 +16,13 @@ const showSponsoredProducts = (args: SearchParams) => {
   return !args.sort || args.sort?.toLowerCase() === RELEVANCE_DESC_SORT_STR
 }
 
-const getSearchParams = (args: SearchParams): AdServerSearchParams => {
+const getSearchParams = (
+  args: SearchParams,
+  privateSellers: SelectedFacet[]
+): AdServerSearchParams => {
   const adServerSearchParams = {
     query: args.query,
-    selectedFacets: args.selectedFacets,
-    regionId: args.regionId,
-    operator: args.operator,
-    fuzzy: args.fuzzy,
-    searchState: args.searchState,
+    selectedFacets: [...privateSellers, ...(args.selectedFacets ?? [])],
   }
 
   return compact(adServerSearchParams)
@@ -64,10 +64,13 @@ export async function sponsoredProducts(
 ): Promise<SponsoredProduct[]> {
   if (!showSponsoredProducts(args)) return []
 
+  const regionId = args.regionId ?? (await region.fromSegment(ctx))
+  const privateSellers = await region.toSelectedFacets(regionId, ctx)
+
   try {
     const adResponse = await ctx.clients.adServer.getSponsoredProducts({
       count: SPONSORED_PRODUCTS_COUNT,
-      searchParams: getSearchParams(args),
+      searchParams: getSearchParams(args, privateSellers),
       userId: args.anonymousId,
     })
 

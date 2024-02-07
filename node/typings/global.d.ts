@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
-import { ServiceContext } from '@vtex/api'
-
-import { Clients } from '../clients/index'
+import type { ServiceContext } from '@vtex/api'
+import type { Clients } from '../clients'
 
 declare global {
   type Context = ServiceContext<Clients>
