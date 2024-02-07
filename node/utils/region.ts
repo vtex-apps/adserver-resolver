@@ -12,12 +12,7 @@ async function toSelectedFacets(
   }
 
   try {
-    // eslint-disable-next-line no-console
-    console.log(regionId)
     const regions = (await checkout.regions(regionId)) ?? []
-
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(regions))
     const region = regions.find((r) => r.id === regionId)
     const sellers = region?.sellers ?? []
 
@@ -26,8 +21,6 @@ async function toSelectedFacets(
       value: seller.id,
     }))
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(e))
     logger.error(e)
 
     return []
