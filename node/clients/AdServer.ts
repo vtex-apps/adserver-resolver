@@ -7,7 +7,7 @@ class AdServer extends ExternalClient {
   public static BASE_URL = 'https://ad-server.vtex.systems'
 
   public static ERROR_MESSAGES = {
-    AD_NOT_FOUND: 'Ad not found',
+    AD_NOT_FOUND: 'Ad not found\n',
   }
 
   constructor(ctx: IOContext, options?: InstanceOptions) {
