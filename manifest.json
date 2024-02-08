@@ -1,7 +1,7 @@
 {
   "vendor": "vtex",
   "name": "adserver-resolver",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "title": "adserver resolver",
   "description": "Adserver resolver",
   "builders": {
