@@ -2,23 +2,32 @@ import region from '../../utils/region'
 
 describe('region#toSelectedFacets', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let ctx: any
-
-  beforeEach(() => {
-    ctx = {
-      clients: {
-        checkout: {
-          regions: jest.fn(),
-        },
+  const ctx = {
+    clients: {
+      checkout: {
+        regions: jest.fn(),
       },
-    }
-  })
+    },
+    vtex: {
+      segmentToken: 'eyJyZWdpb24tSWQiOiIxIn0=',
+      logger: {
+        error: jest.fn(),
+      },
+    },
+  }
 
   it('should return an array of selected facets', async () => {
     ctx.clients.checkout.regions.mockResolvedValue([
-      { id: '1' },
-      { id: '2' },
-      { id: '3' },
+      {
+        id: '1',
+        sellers: [
+          { id: '1', name: 'seller1' },
+          { id: '2', name: 'seller2' },
+          { id: '3', name: 'seller3' },
+        ],
+      },
+      { id: '2', sellers: [] },
+      { id: '3', sellers: [] },
     ])
 
     const result = await region.toSelectedFacets('1', ctx as unknown as Context)
@@ -69,6 +78,9 @@ describe('region#fromSegment', () => {
       },
       vtex: {
         segmentToken: undefined,
+        logger: {
+          error: jest.fn(),
+        },
       },
     }
   })
