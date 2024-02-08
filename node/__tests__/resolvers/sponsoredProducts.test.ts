@@ -12,11 +12,17 @@ const mockContext = {
       getSponsoredProducts: getSponsoredProductsSpy,
     },
   },
+  vtex: {
+    logger: {
+      error: jest.fn(),
+    },
+  },
 }
 
 const defaultVariables = {
   query: 'shoes',
   sort: '',
+  anonymousId: 'anonymousId',
 }
 
 describe('query sponsoredProducts', () => {
@@ -50,7 +56,11 @@ describe('query sponsoredProducts', () => {
 
         expect(getSponsoredProductsSpy).toHaveBeenCalledWith({
           count: 2,
-          searchParams: { query: 'shoes' },
+          searchParams: {
+            query: 'shoes',
+            selectedFacets: [],
+          },
+          userId: 'anonymousId',
         })
         expect(result).toMatchObject(expectedResponse)
       })
