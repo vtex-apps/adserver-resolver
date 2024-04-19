@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.7.5] - 2024-04-19
+
 ### Changed
 
 - Remove billingOptions so that this app can be used as dependency.
