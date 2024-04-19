@@ -29,11 +29,5 @@
       "name": "outbound-access"
     }
   ],
-  "billingOptions": {
-    "free": true,
-    "availableCountries": [
-      "*"
-    ]
-  },
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }
