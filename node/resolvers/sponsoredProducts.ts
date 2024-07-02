@@ -8,7 +8,7 @@ import region from '../utils/region'
 
 const RULE_ID = 'sponsoredProduct'
 const PRODUCT_UNIQUE_IDENTIFIER_FIELD = 'product'
-const SPONSORED_PRODUCTS_COUNT = 2
+const DEFAULT_SPONSORED_COUNT = 3
 const RELEVANCE_DESC_SORT_STR = 'orderbyscoredesc'
 
 // Only show sponsored products in the default sort (Relevance).
@@ -59,7 +59,7 @@ const mapSponsoredProduct = (
 
 export async function sponsoredProducts(
   _: unknown,
-  args: SearchParams,
+  args: SponsoredProductsParams,
   ctx: Context
 ): Promise<SponsoredProduct[]> {
   if (!showSponsoredProducts(args)) return []
@@ -69,8 +69,9 @@ export async function sponsoredProducts(
 
   try {
     const adResponse = await ctx.clients.adServer.getSponsoredProducts({
-      count: SPONSORED_PRODUCTS_COUNT,
       searchParams: getSearchParams(args, privateSellers),
+      count: args.sponsoredCount ?? DEFAULT_SPONSORED_COUNT,
+      placement: args.placement,
       userId: args.anonymousId,
     })
 
