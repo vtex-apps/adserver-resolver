@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Correct "not found" message from the Ad Server.
+
 ## [2.1.0] - 2024-07-09
 
 ### Added
 
-- Pass `placement` and `count` from the frontend to the Ad Server;
+- Pass `placement` and `count` from the frontend to the Ad Server.
 
 ## [2.0.0] - 2024-04-22
 
