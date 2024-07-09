@@ -19,10 +19,13 @@ const mockContext = {
   },
 }
 
+const sponsoredCount = 4
+
 const defaultVariables = {
   query: 'shoes',
   sort: '',
   anonymousId: 'anonymousId',
+  sponsoredCount
 }
 
 describe('query sponsoredProducts', () => {
@@ -55,7 +58,7 @@ describe('query sponsoredProducts', () => {
         const result = await query({}, defaultVariables, mockContext as any)
 
         expect(getSponsoredProductsSpy).toHaveBeenCalledWith({
-          count: 2,
+          count: sponsoredCount,
           searchParams: {
             query: 'shoes',
             selectedFacets: [],

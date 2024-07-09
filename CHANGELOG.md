@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Pass `placement` and `count` from the frontend to the Ad Server;
+
 ## [2.0.0] - 2024-04-22
 
 ## [1.0.0] - 2024-04-22

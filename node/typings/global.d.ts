@@ -35,6 +35,11 @@ declare global {
     value: string
   }
 
+  type SponsoredProductsParams = SearchParams & {
+    placement?: string
+    sponsoredCount?: number
+  }
+
   type SearchParams = {
     query?: string
     page?: string
