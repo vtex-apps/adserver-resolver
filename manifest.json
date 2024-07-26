@@ -2,8 +2,8 @@
   "vendor": "vtex",
   "name": "adserver-resolver",
   "version": "2.1.1",
-  "title": "adserver resolver",
-  "description": "Adserver resolver",
+  "title": "Ad Server Resolver",
+  "description": "Configurations for sponsored products on your store",
   "builders": {
     "node": "6.x"
   },
@@ -29,5 +29,17 @@
       "name": "outbound-access"
     }
   ],
+  "settingsSchema": {
+    "title": "vtex.adserver-resolver",
+    "type": "object",
+    "properties": {
+      "enableAdsOnCollections": {
+        "title": "Enable sponsored products on collections",
+        "description": "If checked, sponsored products will be displayed on product collections.",
+        "type": "boolean",
+        "default": true
+      }
+    }
+  },
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }
