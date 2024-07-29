@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.0] - 2024-07-29
+
 ### Added
 
 - Add the `enableAdsOnCollections` setting, determining whether or not to fetch sponsored products on collections.
