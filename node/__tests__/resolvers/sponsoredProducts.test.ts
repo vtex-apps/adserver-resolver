@@ -2,19 +2,16 @@ import AdServer from '../../clients/AdServer'
 import { resolvers } from '../../resolvers'
 import { getSponsoredProductsResponse } from '../__utils__/mocks/adServer'
 
-const getSponsoredProductsSpy = jest
-  .fn()
-  .mockImplementation(() => getSponsoredProductsResponse)
+const getSponsoredProductsSpy = jest.fn()
 
-const mockContext = {
+const defaultContext = {
+  vtex: { logger: { error: jest.fn() } },
   clients: {
-    adServer: {
-      getSponsoredProducts: getSponsoredProductsSpy,
-    },
-  },
-  vtex: {
-    logger: {
-      error: jest.fn(),
+    adServer: { getSponsoredProducts: getSponsoredProductsSpy },
+    apps: {
+      getAppSettings: jest
+        .fn()
+        .mockResolvedValue({ enableAdsOnCollections: true }),
     },
   },
 }
@@ -25,11 +22,15 @@ const defaultVariables = {
   query: 'shoes',
   sort: '',
   anonymousId: 'anonymousId',
-  sponsoredCount
+  sponsoredCount,
 }
 
 describe('query sponsoredProducts', () => {
   const query = resolvers.Query.sponsoredProducts
+
+  beforeEach(() => {
+    getSponsoredProductsSpy.mockResolvedValue(getSponsoredProductsResponse)
+  })
 
   describe('when the shopper is sorting products by relevance', () => {
     describe('and the ad server returns sponsored products', () => {
@@ -55,7 +56,7 @@ describe('query sponsoredProducts', () => {
 
       it('queries the Ad Server and returns the ad response', async () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const result = await query({}, defaultVariables, mockContext as any)
+        const result = await query({}, defaultVariables, defaultContext as any)
 
         expect(getSponsoredProductsSpy).toHaveBeenCalledWith({
           count: sponsoredCount,
@@ -78,9 +79,55 @@ describe('query sponsoredProducts', () => {
 
       it('queries returns an empty list', async () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const result = await query({}, defaultVariables, mockContext as any)
+        const result = await query({}, defaultVariables, defaultContext as any)
 
         expect(result).toMatchObject([])
+      })
+    })
+
+    describe('and the shopper is requesting a product collection', () => {
+      const selectedFacets = [
+        { key: 'productClusterIds', value: 'collectionId' },
+      ]
+
+      const variables = {
+        ...defaultVariables,
+        selectedFacets,
+        map: 'productClusterIds',
+      }
+
+      beforeEach(() => {
+        getSponsoredProductsSpy.mockResolvedValue(getSponsoredProductsResponse)
+      })
+
+      it('returns the ad response', async () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const result = await query({}, variables, defaultContext as any)
+
+        expect(result[0].advertisement?.adId).toBe(
+          getSponsoredProductsResponse.sponsoredProducts[0].adId
+        )
+      })
+
+      describe('and the store has disabled sponsored products on collections', () => {
+        const context = {
+          ...defaultContext,
+          clients: {
+            ...defaultContext.clients,
+            apps: {
+              getAppSettings: jest
+                .fn()
+                .mockResolvedValue({ enableAdsOnCollections: false }),
+            },
+          },
+        }
+
+        it('returns an empty list as sponsored products', async () => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const result = await query({}, variables, context as any)
+
+          expect(result).toMatchObject([])
+        })
       })
     })
   })
@@ -95,7 +142,7 @@ describe('query sponsoredProducts', () => {
 
     it('returns an empty list as sponsored products', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const result = await query({}, variables, mockContext as any)
+      const result = await query({}, variables, defaultContext as any)
 
       expect(result).toMatchObject(expectedResponse)
     })

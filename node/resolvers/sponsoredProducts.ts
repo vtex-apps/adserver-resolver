@@ -5,16 +5,11 @@ import type {
 } from '../typings/AdServer'
 import compact from '../utils/compact'
 import region from '../utils/region'
+import { shouldFetchSponsoredProducts } from '../utils/shouldFetchSponsoredProducts'
 
 const RULE_ID = 'sponsoredProduct'
 const PRODUCT_UNIQUE_IDENTIFIER_FIELD = 'product'
 const DEFAULT_SPONSORED_COUNT = 3
-const RELEVANCE_DESC_SORT_STR = 'orderbyscoredesc'
-
-// Only show sponsored products in the default sort (Relevance).
-const showSponsoredProducts = (args: SearchParams) => {
-  return !args.sort || args.sort?.toLowerCase() === RELEVANCE_DESC_SORT_STR
-}
 
 const getSearchParams = (
   args: SearchParams,
@@ -62,7 +57,9 @@ export async function sponsoredProducts(
   args: SponsoredProductsParams,
   ctx: Context
 ): Promise<SponsoredProduct[]> {
-  if (!showSponsoredProducts(args)) return []
+  const shouldFetch = await shouldFetchSponsoredProducts(args, ctx)
+
+  if (!shouldFetch) return []
 
   const regionId = args.regionId ?? (await region.fromSegment(ctx))
   const privateSellers = await region.toSelectedFacets(regionId, ctx)

@@ -46,6 +46,7 @@ declare global {
     count?: string
     sort?: string
     operator?: string
+    map?: string
     fuzzy?: string
     locale?: string
     allowRedirect?: boolean
