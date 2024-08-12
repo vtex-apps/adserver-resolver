@@ -12,7 +12,7 @@ export default new Service<Clients, RecorderState, ParamsContext>({
     implementation: Clients,
     options: {
       default: {
-        retries: 2,
+        retries: 0,
         timeout: THREE_SECONDS_MS,
       },
     },
