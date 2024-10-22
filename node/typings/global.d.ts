@@ -91,4 +91,24 @@ declare global {
   type AdvertisementOptions = {
     hideSponsoredBadge?: boolean
   }
+
+  type SponsoredBannersParams = {
+    anonymousId: string
+    placement: string
+    adUnit: string
+    channel: string
+  }
+
+  type SponsoredBanner = {
+    bannerId: string
+    advertisement: AdvertisementBanner
+  }
+
+  type AdvertisementBanner = {
+    imageUrl: string
+    campaignId: string
+    actionCost: number
+    adRequestId: string
+    adResponseId: string
+  }
 }
