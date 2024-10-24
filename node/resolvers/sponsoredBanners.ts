@@ -7,9 +7,9 @@ const SPONSORED_COUNT = 1
 const mapSponsoredBanner = (
   adResponse: AdServerSponsoredBannersResponse
 ): SponsoredBanner[] => {
-  if (!adResponse?.sponsoredBanners) return []
+  if (!adResponse?.items) return []
 
-  return adResponse.sponsoredBanners?.map(
+  return adResponse.items?.map(
     ({ actionCost, bannerId, campaignId, imageUrl, targetUrl }) => {
       const advertisement = {
         imageUrl,
@@ -27,6 +27,20 @@ const mapSponsoredBanner = (
     }
   )
 }
+
+// export function sponsoredBanners(): SponsoredBanner[] {
+//   return [{
+//     bannerId: '1',
+//     advertisement: {
+//       imageUrl: 'https://turnedgreen.com/wp-content/uploads/2015/09/Trees-1200x270.jpg',
+//       targetUrl: 'https://www.vtex.com/',
+//       campaignId: '1',
+//       actionCost: 1,
+//       adRequestId: '1',
+//       adResponseId: '1',
+//     }
+//   }]
+// }
 
 export async function sponsoredBanners(
   _: unknown,
