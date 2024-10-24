@@ -46,6 +46,7 @@ export type AdServerSponsoredBannersResponse = {
 
 type AdServerSponsoredBanner = {
   bannerId: string
+  targetUrl: string
   imageUrl: string
   campaignId: string
   actionCost: number

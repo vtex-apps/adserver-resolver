@@ -106,6 +106,7 @@ declare global {
 
   type AdvertisementBanner = {
     imageUrl: string
+    targetUrl: string
     campaignId: string
     actionCost: number
     adRequestId: string

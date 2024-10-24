@@ -10,9 +10,10 @@ const mapSponsoredBanner = (
   if (!adResponse?.sponsoredBanners) return []
 
   return adResponse.sponsoredBanners?.map(
-    ({ actionCost, bannerId, campaignId, imageUrl }) => {
+    ({ actionCost, bannerId, campaignId, imageUrl, targetUrl }) => {
       const advertisement = {
         imageUrl,
+        targetUrl,
         campaignId,
         actionCost,
         adRequestId: adResponse?.adRequestId,
