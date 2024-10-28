@@ -10,11 +10,11 @@ const mapSponsoredBanner = (
   if (!adResponse?.items) return []
 
   return adResponse.items?.map(
-    ({ imageUrl, targetUrl, bannerImageId, width, height }) => {
+    ({ bannerImageId, imageUrl, targetUrl, width, height }) => {
       const advertisement = {
+        bannerImageId,
         imageUrl,
         targetUrl,
-        bannerImageId,
         width,
         height,
       }
