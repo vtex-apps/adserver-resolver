@@ -33,21 +33,20 @@ export type AdServerSponsoredBannersRequest = {
   count: number
   adType: 'banner'
   adUnit: string
-  channel: string
+  channel?: string
   placement: string
-  userId: string
+  userId?: string
 }
 
 export type AdServerSponsoredBannersResponse = {
-  adRequestId: string
   adResponseId: string
   items: AdServerSponsoredBanner[]
 }
 
 type AdServerSponsoredBanner = {
-  bannerId: string
-  targetUrl: string
   imageUrl: string
-  campaignId: string
-  actionCost: number
+  targetUrl: string
+  bannerImageId: string
+  width: number
+  height: number
 }

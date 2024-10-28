@@ -10,37 +10,22 @@ const mapSponsoredBanner = (
   if (!adResponse?.items) return []
 
   return adResponse.items?.map(
-    ({ actionCost, bannerId, campaignId, imageUrl, targetUrl }) => {
+    ({ imageUrl, targetUrl, bannerImageId, width, height }) => {
       const advertisement = {
         imageUrl,
         targetUrl,
-        campaignId,
-        actionCost,
-        adRequestId: adResponse?.adRequestId,
-        adResponseId: adResponse?.adResponseId,
+        bannerImageId,
+        width,
+        height,
       }
 
       return {
-        bannerId,
+        adResponseId: adResponse?.adResponseId,
         advertisement,
       }
     }
   )
 }
-
-// export function sponsoredBanners(): SponsoredBanner[] {
-//   return [{
-//     bannerId: '1',
-//     advertisement: {
-//       imageUrl: 'https://turnedgreen.com/wp-content/uploads/2015/09/Trees-1200x270.jpg',
-//       targetUrl: 'https://www.vtex.com/',
-//       campaignId: '1',
-//       actionCost: 1,
-//       adRequestId: '1',
-//       adResponseId: '1',
-//     }
-//   }]
-// }
 
 export async function sponsoredBanners(
   _: unknown,
