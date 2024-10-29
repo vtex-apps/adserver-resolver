@@ -40,7 +40,7 @@ export type AdServerSponsoredBannersRequest = {
 
 export type AdServerSponsoredBannersResponse = {
   adResponseId: string
-  items: AdServerSponsoredBanner[]
+  banners: AdServerSponsoredBanner[]
 }
 
 type AdServerSponsoredBanner = {

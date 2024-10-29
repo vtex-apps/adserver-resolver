@@ -7,9 +7,9 @@ const SPONSORED_COUNT = 1
 const mapSponsoredBanner = (
   adResponse: AdServerSponsoredBannersResponse
 ): SponsoredBanner[] => {
-  if (!adResponse?.items) return []
+  if (!adResponse?.banners) return []
 
-  return adResponse.items?.map(
+  return adResponse.banners?.map(
     ({ bannerImageId, imageUrl, targetUrl, width, height }) => {
       const advertisement = {
         bannerImageId,
