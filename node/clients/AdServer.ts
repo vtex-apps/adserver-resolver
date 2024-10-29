@@ -41,7 +41,7 @@ class AdServer extends ExternalClient {
       console.log(JSON.stringify(body, null, 2))
     }
 
-    return this.http.post('/api/v1/ads/banner', {
+    return this.http.post('/api/ads/v1/ads/banner/query', {
       accountName: this.context.account,
       ...body,
     })
