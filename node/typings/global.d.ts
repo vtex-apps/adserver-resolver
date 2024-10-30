@@ -93,10 +93,11 @@ declare global {
   }
 
   type SponsoredBannersParams = {
-    anonymousId?: string
+    sponsoredCount: number
     placement: string
     adUnit: string
     channel?: string
+    anonymousId?: string
   }
 
   type SponsoredBanner = {

@@ -31,7 +31,6 @@ type Options = {
 export type AdServerSponsoredBannersRequest = {
   accountName?: string
   count: number
-  adType: 'banner'
   adUnit: string
   channel?: string
   placement: string

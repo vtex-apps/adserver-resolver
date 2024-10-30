@@ -17,10 +17,11 @@ const defaultContext = {
 }
 
 const defaultVariables = {
-  anonymousId: 'anonymousId',
+  sponsoredCount: 1,
   placement: 'homepage',
   adUnit: 'billboard',
   channel: 'website',
+  anonymousId: 'anonymousId',
 }
 
 describe('query sponsoredBanners', () => {
@@ -36,7 +37,6 @@ describe('query sponsoredBanners', () => {
       const result = await query({}, defaultVariables, defaultContext as any)
 
       expect(getSponsoredBannersSpy).toHaveBeenCalledWith({
-        adType: 'banner',
         count: 1,
         userId: 'anonymousId',
         placement: 'homepage',

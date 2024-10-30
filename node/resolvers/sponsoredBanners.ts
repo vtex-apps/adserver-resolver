@@ -1,9 +1,6 @@
 import AdServer from '../clients/AdServer'
 import type { AdServerSponsoredBannersResponse } from '../typings/AdServer'
 
-const AD_TYPE = 'banner'
-const SPONSORED_COUNT = 1
-
 const mapSponsoredBanner = (
   adResponse: AdServerSponsoredBannersResponse
 ): SponsoredBanner[] => {
@@ -34,8 +31,7 @@ export async function sponsoredBanners(
 ): Promise<SponsoredBanner[]> {
   try {
     const adResponse = await ctx.clients.adServer.getSponsoredBanners({
-      adType: AD_TYPE,
-      count: SPONSORED_COUNT,
+      count: args.sponsoredCount,
       userId: args.anonymousId,
       placement: args.placement,
       adUnit: args.adUnit,
