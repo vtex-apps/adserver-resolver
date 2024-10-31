@@ -92,11 +92,37 @@ declare global {
     hideSponsoredBadge?: boolean
   }
 
+  type Placement =
+    | 'top_search'
+    | 'middle_search'
+    | 'home_shelfpdp_shelf'
+    | 'search_shelf'
+    | 'cart_shelf'
+    | 'plp_shelf'
+    | 'autocomplete'
+    | 'homepage'
+
+  type AdUnit =
+    | 'billboard'
+    | 'smartphonebanner'
+    | 'leaderboard'
+    | 'superleaderboard'
+    | 'portrait'
+    | 'skyscraper'
+    | 'mediumrectangle'
+    | 'button120x60'
+    | 'mobilephoneinterstitial'
+    | 'featurephonesmallbanner'
+    | 'featurephonemediumbanner'
+    | 'featurephonelargebanner'
+
+  type Channel = 'website' | 'android' | 'ios' | 'msite' | 'whatsapp'
+
   type SponsoredBannersParams = {
     sponsoredCount: number
-    placement: string
-    adUnit: string
-    channel?: string
+    placement: Placement
+    adUnit: AdUnit
+    channel?: Channel
     anonymousId?: string
   }
 
