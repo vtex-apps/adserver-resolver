@@ -16,7 +16,7 @@ const defaultContext = {
   },
 }
 
-const defaultVariables = {
+const defaultVariables: SponsoredBannersParams = {
   sponsoredCount: 1,
   placement: 'homepage',
   adUnit: 'billboard',
