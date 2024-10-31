@@ -1,10 +1,12 @@
 import AdServer from '../clients/AdServer'
 import type { AdServerSponsoredBannersResponse } from '../typings/AdServer'
 
-const mapSponsoredBanner = (
+const mapAdServerResponseToSponsoredBanner = (
   adResponse: AdServerSponsoredBannersResponse
 ): SponsoredBanner[] => {
-  if (!adResponse?.banners) return []
+  if (!adResponse?.banners) {
+    return []
+  }
 
   return adResponse.banners?.map(
     ({ bannerImageId, imageUrl, targetUrl, width, height }) => {
@@ -38,9 +40,11 @@ export async function sponsoredBanners(
       channel: args.channel,
     })
 
-    return mapSponsoredBanner(adResponse)
+    return mapAdServerResponseToSponsoredBanner(adResponse)
   } catch (error) {
-    if (error.response?.data === AdServer.ERROR_MESSAGES.AD_NOT_FOUND) return []
+    if (error.response?.data === AdServer.ERROR_MESSAGES.AD_NOT_FOUND) {
+      return []
+    }
 
     throw error
   }
