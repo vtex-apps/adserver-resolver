@@ -24,7 +24,11 @@ class AdServer extends ExternalClient {
   ): Promise<AdServerResponse> {
     if (process.env.VTEX_APP_LINK) {
       // eslint-disable-next-line no-console
-      console.log(JSON.stringify(body, null, 2))
+      console.log(
+        'endpoint: /api/v1/sponsored-products',
+        'body: ',
+        JSON.stringify({ ...body, accountName: this.context.account }, null, 2)
+      )
     }
 
     return this.http.post('/api/v1/sponsored-products', {
@@ -38,7 +42,11 @@ class AdServer extends ExternalClient {
   ): Promise<AdServerSponsoredBannersResponse> {
     if (process.env.VTEX_APP_LINK) {
       // eslint-disable-next-line no-console
-      console.log(JSON.stringify(body, null, 2))
+      console.log(
+        'endpoint: /api/ads/v1/ads/banner/query',
+        'body: ',
+        JSON.stringify({ ...body, accountName: this.context.account }, null, 2)
+      )
     }
 
     return this.http.post('/api/ads/v1/ads/banner/query', {
