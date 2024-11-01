@@ -36,5 +36,5 @@
   "resolutions": {
     "@types/express-serve-static-core": "4.17.28"
   },
-  "version": "2.2.1"
+  "version": "2.2.2"
 }
