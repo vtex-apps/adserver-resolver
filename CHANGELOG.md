@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `getSponsoredBanners` request.
+- `sponsoredBanners` resolver.
+
+### Changed
+
+- Update `@vtex/api` dependency to version 6.48.0
+
 ## [2.2.1] - 2024-08-12
 
 ## [2.2.0] - 2024-07-29

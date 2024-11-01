@@ -18,7 +18,7 @@
       "name": "outbound-access",
       "attrs": {
         "host": "ad-server.vtex.systems",
-        "path": "/api/v1/sponsored-products"
+        "path": "/api/*"
       }
     },
     {

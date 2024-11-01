@@ -27,3 +27,25 @@ type AdServerSponsoredProduct = {
 type Options = {
   hideSponsoredBadge?: boolean
 }
+
+export type AdServerSponsoredBannersRequest = {
+  accountName?: string
+  count: number
+  adUnit: string
+  channel?: string
+  placement: string
+  userId?: string
+}
+
+export type AdServerSponsoredBannersResponse = {
+  adResponseId: string
+  banners: AdServerSponsoredBanner[]
+}
+
+type AdServerSponsoredBanner = {
+  imageUrl: string
+  targetUrl: string
+  bannerImageId: string
+  width: number
+  height: number
+}

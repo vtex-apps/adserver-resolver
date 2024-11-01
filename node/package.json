@@ -22,12 +22,12 @@
   "dependencies": {
     "@vtex/clients": "^2.21.0",
     "graphql": "^14.5.8",
-    "vtex.adserver-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.adserver-graphql@0.0.1/public"
+    "vtex.adserver-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.adserver-graphql@0.3.1/public"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
     "@types/node": "^12.12.21",
-    "@vtex/api": "6.47.0",
+    "@vtex/api": "6.48.0",
     "@vtex/tsconfig": "^0.5.6",
     "jest": "^25.1.0",
     "ts-jest": "^25.2.1",
