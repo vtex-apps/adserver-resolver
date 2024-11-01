@@ -4891,9 +4891,9 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-"vtex.adserver-graphql@http://luarasb--biggy.myvtex.com/_v/public/typings/v1/vtex.adserver-graphql@0.3.0+build1729797898/public":
+"vtex.adserver-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.adserver-graphql@0.3.1/public":
   version "0.0.0"
-  resolved "http://luarasb--biggy.myvtex.com/_v/public/typings/v1/vtex.adserver-graphql@0.3.0+build1729797898/public#dfffb4959c898d157704e492ff35fdc92e42e068"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.adserver-graphql@0.3.1/public#753bd8ad83dd4fbbb7ec3625a3e12a65e45ea20d"
 
 w3c-hr-time@^1.0.1:
   version "1.0.2"
