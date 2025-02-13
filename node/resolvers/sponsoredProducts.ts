@@ -47,7 +47,7 @@ const mapSponsoredProduct = (
         },
         rule: { id: RULE_ID },
         advertisement,
-        sellerId: "",
+        sellerId: undefined,
       }
     }
   )
