@@ -66,6 +66,7 @@ declare global {
     identifier: ProductUniqueIdentifier
     rule: Rule
     advertisement?: Advertisement
+    sellerId?: string
   }
 
   type ProductUniqueIdentifier = {
