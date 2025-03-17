@@ -1,11 +1,12 @@
-import Newtail from '../clients/Newtail'
+import Newtail from '../../clients/Newtail'
 import type {
   NewtailResponse,
   NewtailPlacement,
   PlacementResponse,
   NewtailRequest,
-} from '../typings/Newtail'
-import { shouldFetchSponsoredProducts } from '../utils/shouldFetchSponsoredProducts'
+} from '../../typings/Newtail'
+import {getNewtailPublisherId} from '../../utils/getNewtailPublisherID'
+import { shouldFetchSponsoredProducts } from '../../utils/shouldFetchSponsoredProducts'
 
 const RULE_ID = 'sponsoredProduct'
 const PRODUCT_SKU_IDENTIFIER_FIELD = 'skuId'
@@ -111,7 +112,8 @@ export async function newtailSponsoredProducts(
       session_id: args.macId,
     }
 
-    const newtailResponse = await ctx.clients.newtail.getSponsoredProducts(body)
+    const publisherId = await getNewtailPublisherId(ctx)
+    const newtailResponse = await ctx.clients.newtail.getSponsoredProducts(body, publisherId)
 
     return mapSponsoredProduct(newtailResponse, args.placement)
   } catch (error) {

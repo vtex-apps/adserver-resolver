@@ -1,11 +1,11 @@
-import AdServer from '../clients/AdServer'
+import AdServer from '../../clients/AdServer'
 import type {
   AdServerResponse,
   AdServerSearchParams,
-} from '../typings/AdServer'
-import compact from '../utils/compact'
-import region from '../utils/region'
-import { shouldFetchSponsoredProducts } from '../utils/shouldFetchSponsoredProducts'
+} from '../../typings/AdServer'
+import compact from '../../utils/compact'
+import region from '../../utils/region'
+import { shouldFetchSponsoredProducts } from '../../utils/shouldFetchSponsoredProducts'
 
 const RULE_ID = 'sponsoredProduct'
 const PRODUCT_UNIQUE_IDENTIFIER_FIELD = 'product'
@@ -53,7 +53,7 @@ const mapSponsoredProduct = (
   )
 }
 
-export async function sponsoredProducts(
+export async function vtexSponsoredProducts(
   _: unknown,
   args: SponsoredProductsParams,
   ctx: Context
