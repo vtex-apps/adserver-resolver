@@ -37,7 +37,7 @@
     }
   ],
   "settingsSchema": {
-    "title": "vtex.adserver-resolver",
+    "title": "AdServer Resolver",
     "type": "object",
     "properties": {
       "enableAdsOnCollections": {
@@ -45,6 +45,18 @@
         "description": "If checked, sponsored products will be displayed on product collections.",
         "type": "boolean",
         "default": true
+      },
+      "enableNewtail": {
+        "title": "Enable Newtail",
+        "description": "If checked, Newtail will be used to display sponsored products.",
+        "type": "boolean",
+        "default": false
+      },
+      "newtailPublisherId": {
+        "title": "Newtail Publisher ID",
+        "description": "The publisher ID provided by Newtail.",
+        "type": "string",
+        "default": ""
       }
     }
   },
