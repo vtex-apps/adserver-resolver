@@ -20,11 +20,6 @@ class Newtail extends ExternalClient {
   ): Promise<NewtailResponse> {
     const endpoint = `/v1/rma/${newtailPublisherId}`
 
-    // TODO: remove it after kobe fix
-    if (this.context.account === 'americanas') {
-      body.user_id = body.session_id
-    }
-
     return this.http
       .post<NewtailResponse>(endpoint, {
         ...body,
