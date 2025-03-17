@@ -27,6 +27,13 @@
         "path": "/api/checkout/regions/*"
       },
       "name": "outbound-access"
+    },
+    {
+      "attrs": {
+        "host": "newtail-media.newtail.com.br",
+        "path": "*"
+      },
+      "name": "outbound-access"
     }
   ],
   "settingsSchema": {
