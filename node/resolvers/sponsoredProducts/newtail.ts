@@ -103,6 +103,12 @@ export async function newtailSponsoredProducts(
 
     const context = args?.query?.length ? 'search' : (categoryName ? 'category' : 'home')
 
+    const tags = args?.selectedFacets?.length && args.selectedFacets.some((facet) => facet.key === "productClusterIds")
+      ? args.selectedFacets
+          .filter((facet) => facet.key === "productClusterIds")
+          .map((facet) => `product_cluster/${facet.value}`)
+      : undefined;
+
     const body: NewtailRequest = {
       term: args.query,
       context,
@@ -110,6 +116,7 @@ export async function newtailSponsoredProducts(
       placements: definePlacements(adsAmount, args.placement),
       user_id: args.userId,
       session_id: args.macId,
+      tags,
     }
 
     const publisherId = await getNewtailPublisherId(ctx)
