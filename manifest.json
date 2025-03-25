@@ -1,7 +1,7 @@
 {
   "vendor": "vtex",
   "name": "adserver-resolver",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "title": "Ad Server Resolver",
   "description": "Configurations for sponsored products on your store",
   "builders": {
