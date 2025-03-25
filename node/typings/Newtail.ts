@@ -5,6 +5,7 @@ export type NewtailRequest = {
   placements?: { [key: string]: NewtailPlacement }
   user_id?: string
   session_id?: string
+  tags?: string[]
 }
 
 export type NewtailPlacement = {
