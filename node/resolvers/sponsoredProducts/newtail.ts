@@ -103,9 +103,9 @@ export async function newtailSponsoredProducts(
 
     const context = args?.query?.length ? 'search' : (categoryName ? 'category' : 'home')
 
-    const tags = args?.selectedFacets?.length && args.selectedFacets.some((facet) => facet.key.startsWith("productClusterIds"))
+    const tags = args?.selectedFacets?.length && args.selectedFacets.some((facet) => facet.key === "productClusterIds")
       ? args.selectedFacets
-          .filter((facet) => facet.key.startsWith("productClusterIds"))
+          .filter((facet) => facet.key === "productClusterIds")
           .map((facet) => `product_cluster/${facet.value}`)
       : undefined;
 
