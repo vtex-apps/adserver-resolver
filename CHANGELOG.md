@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Allow ads segmentation by SKU ID.
+
 ## [2.6.0] - 2025-03-25
 
 ## [2.5.0] - 2025-03-19
