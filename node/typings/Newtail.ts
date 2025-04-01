@@ -6,6 +6,7 @@ export type NewtailRequest = {
   user_id?: string
   session_id?: string
   tags?: string[]
+  product_sku?: string
 }
 
 export type NewtailPlacement = {
