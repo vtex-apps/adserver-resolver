@@ -117,6 +117,7 @@ export async function newtailSponsoredProducts(
       user_id: args.userId,
       session_id: args.macId,
       tags,
+      product_sku: args.skuId,
     }
 
     const publisherId = await getNewtailPublisherId(ctx)

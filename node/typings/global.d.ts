@@ -40,6 +40,7 @@ declare global {
     sponsoredCount?: number
     macId?: string
     userId?: string
+    skuId?: string
   }
 
   type SearchParams = {
