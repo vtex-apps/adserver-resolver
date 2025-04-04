@@ -31,6 +31,8 @@ class AdServer extends ExternalClient {
       )
     }
 
+    body.searchParams.query = body.searchParams.query ?? ''
+
     return this.http.post('/api/v1/sponsored-products', {
       accountName: this.context.account,
       ...body,
