@@ -13,6 +13,7 @@ const PRODUCT_SKU_IDENTIFIER_FIELD = 'skuId'
 const DEFAULT_SPONSORED_COUNT = 3
 const DEFAULT_PLACEMENT_NAME = 'ads_newtail'
 const DEFAULT_CAMPAIGN_ID = ''
+const DEFAULT_SESSION_ID = 'VTEX_SESSION_ID'
 
 const getPlacementList = (
   newtailResponse: NewtailResponse,
@@ -25,9 +26,21 @@ const encodeBase64 = (str: string): string => {
   return Buffer.from(str).toString('base64')
 }
 
+const removeTrackingParamsFromUrl = (eventUrl: string): string => {
+  const url = new URL(eventUrl)
+  const paramsToRemove = ['user_id', 'session_id', 'event_id']
+
+  paramsToRemove.forEach(param => {
+    url.searchParams.delete(param)
+  })
+  
+  return url.toString()
+}
+
 const mapSponsoredProduct = (
   newtailResponse: NewtailResponse,
-  placement = DEFAULT_PLACEMENT_NAME
+  requestHadSessionId: boolean,
+  placement = DEFAULT_PLACEMENT_NAME,
 ): SponsoredProduct[] => {
   const placementList: PlacementResponse[] = getPlacementList(
     newtailResponse,
@@ -40,7 +53,7 @@ const mapSponsoredProduct = (
     ({ product_sku, impression_url, seller_id, product_metadata }) => {
       const advertisement = {
         campaignId: DEFAULT_CAMPAIGN_ID,
-        adId: encodeBase64(impression_url),
+        adId: encodeBase64(requestHadSessionId ? impression_url : removeTrackingParamsFromUrl(impression_url)),
         actionCost: 0.0,
 
         adRequestId: newtailResponse?.request_id,
@@ -75,9 +88,15 @@ const definePlacements = (
   return placements
 }
 
-const validateParams = (args: SponsoredProductsParams): void => {
-  if (!args.macId) {
-    throw new Error("macId is required but was not provided.");
+const validateParams = (args: SponsoredProductsParams, ctx: Context): boolean => {
+  const {
+    vtex: { logger },
+  } = ctx
+
+  if (args.macId) return true
+  else {
+    logger.warn("macId was not provided.")
+    return false
   }
 }
 export async function newtailSponsoredProducts(
@@ -85,7 +104,8 @@ export async function newtailSponsoredProducts(
   args: SponsoredProductsParams,
   ctx: Context
 ): Promise<SponsoredProduct[]> {
-  validateParams(args);
+
+  const hasMacId = validateParams(args, ctx)
 
   const shouldFetch = await shouldFetchSponsoredProducts(args, ctx)
   if (!shouldFetch) return []
@@ -115,7 +135,7 @@ export async function newtailSponsoredProducts(
       category_name: categoryName,
       placements: definePlacements(adsAmount, args.placement),
       user_id: args.userId,
-      session_id: args.macId,
+      session_id: hasMacId ? args.macId : DEFAULT_SESSION_ID,
       tags,
       product_sku: args.skuId,
     }
@@ -123,7 +143,7 @@ export async function newtailSponsoredProducts(
     const publisherId = await getNewtailPublisherId(ctx)
     const newtailResponse = await ctx.clients.newtail.getSponsoredProducts(body, publisherId)
 
-    return mapSponsoredProduct(newtailResponse, args.placement)
+    return mapSponsoredProduct(newtailResponse, hasMacId, args.placement)
   } catch (error) {
     if (error.response?.data === Newtail.ERROR_MESSAGES.AD_NOT_FOUND) return []
 
