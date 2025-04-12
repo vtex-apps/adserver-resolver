@@ -9,6 +9,7 @@ export async function sponsoredProducts(
   ctx: Context
 ): Promise<SponsoredProduct[]> {
   const should = await shouldUseNewtail(ctx)
+
   if (should) {
     return newtailSponsoredProducts(arg, params, ctx)
   }
