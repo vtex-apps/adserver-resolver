@@ -114,9 +114,9 @@ export async function newtailSponsoredProducts(
     const adsAmount = args.sponsoredCount ?? DEFAULT_SPONSORED_COUNT
 
     const categoryName =
-      args?.selectedFacets?.length && args.selectedFacets.some((facet) => facet.key.startsWith("category"))
+      args?.selectedFacets?.length && args.selectedFacets.some((facet) => (facet.key.startsWith("category") || facet.key === "c"))
         ? args.selectedFacets
-            .filter((facet) => facet.key.startsWith("category"))
+            .filter((facet) => (facet.key.startsWith("category") || facet.key === "c"))
             .map((facet) => facet.value)
             .join(" > ")
         : undefined;
