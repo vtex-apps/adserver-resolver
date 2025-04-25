@@ -121,7 +121,14 @@ export async function newtailSponsoredProducts(
             .join(" > ")
         : undefined;
 
-    const context = args?.query?.length ? 'search' : (categoryName ? 'category' : 'home')
+    const brandName = 
+      args?.selectedFacets?.length && args.selectedFacets.some((facet) => facet.key === "b")
+        ? args.selectedFacets
+            .filter((facet) => facet.key === "b")
+            .map((facet) => facet.value)[0]
+        : undefined;
+
+    const context = args?.query?.length ? 'search' : (categoryName ? 'category' : (brandName ? 'brand_page' : 'home'))
 
     const tags = args?.selectedFacets?.length && args.selectedFacets.some((facet) => facet.key === "productClusterIds")
       ? args.selectedFacets
@@ -138,6 +145,7 @@ export async function newtailSponsoredProducts(
       session_id: hasMacId ? args.macId : DEFAULT_SESSION_ID,
       tags,
       product_sku: args.skuId,
+      brand_name: brandName,
     }
 
     const publisherId = await getNewtailPublisherId(ctx)
