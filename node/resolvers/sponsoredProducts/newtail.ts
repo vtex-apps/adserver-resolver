@@ -143,7 +143,7 @@ export async function newtailSponsoredProducts(
       placements: definePlacements(adsAmount, args.placement),
       user_id: args.userId,
       session_id: hasMacId ? args.macId : DEFAULT_SESSION_ID,
-      tags: (tags && tags.length > 0) ? tags : undefined,
+      tags: (tags && tags?.length > 0) ? tags : undefined,
       product_sku: args.skuId,
       brand_name: brandName,
     }
