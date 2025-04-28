@@ -1,14 +1,13 @@
-const RELEVANCE_DESC_SORT_STR = 'orderbyscoredesc'
-const PRODUCT_CLUSTER_MAP = 'productClusterIds'
+import {PRODUCT_CLUSTER_MAP, RELEVANCE_DESC_SORT_STR} from "./constants"
 
 const isSortedByRelevance = (args: SearchParams) => {
   return !args.sort || args.sort?.toLowerCase() === RELEVANCE_DESC_SORT_STR
 }
 
 const queryHasProductClusters = (args: SearchParams) => {
-  const mapHasProductClusters = args.map === PRODUCT_CLUSTER_MAP
+  const mapHasProductClusters = args.map?.toLowerCase() === PRODUCT_CLUSTER_MAP
   const facetsHaveProductClusters = args.selectedFacets?.some(
-    (facet) => facet.key === PRODUCT_CLUSTER_MAP
+    (facet) => facet.key?.toLowerCase() === PRODUCT_CLUSTER_MAP
   )
 
   return mapHasProductClusters || facetsHaveProductClusters
