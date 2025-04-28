@@ -11,7 +11,9 @@ export async function sponsoredProducts(
   const should = await shouldUseNewtail(ctx)
 
   if (should) {
-    return newtailSponsoredProducts(arg, params, ctx)
+    console.log('arg', arg, 'params', params)
+    const resp = await newtailSponsoredProducts(arg, params, ctx)
+    return resp
   }
 
   return vtexSponsoredProducts(arg, params, ctx)

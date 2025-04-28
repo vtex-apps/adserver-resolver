@@ -5,6 +5,7 @@ import type {
   PlacementResponse,
   NewtailRequest,
 } from '../../typings/Newtail'
+import {PRODUCT_CLUSTER_MAP} from '../../utils/constants'
 import {getNewtailPublisherId} from '../../utils/getNewtailPublisherID'
 import { shouldFetchSponsoredProducts } from '../../utils/shouldFetchSponsoredProducts'
 
@@ -33,7 +34,7 @@ const removeTrackingParamsFromUrl = (eventUrl: string): string => {
   paramsToRemove.forEach(param => {
     url.searchParams.delete(param)
   })
-  
+
   return url.toString()
 }
 
@@ -121,7 +122,7 @@ export async function newtailSponsoredProducts(
             .join(" > ")
         : undefined;
 
-    const brandName = 
+    const brandName =
       args?.selectedFacets?.length && args.selectedFacets.some((facet) => facet.key === "b")
         ? args.selectedFacets
             .filter((facet) => facet.key === "b")
@@ -130,11 +131,10 @@ export async function newtailSponsoredProducts(
 
     const context = args?.query?.length ? 'search' : (categoryName ? 'category' : (brandName ? 'brand_page' : 'home'))
 
-    const tags = args?.selectedFacets?.length && args.selectedFacets.some((facet) => facet.key === "productClusterIds")
-      ? args.selectedFacets
-          .filter((facet) => facet.key === "productClusterIds")
-          .map((facet) => `product_cluster/${facet.value}`)
-      : undefined;
+    const tags = args.selectedFacets
+      ?.filter((facet) => facet.key?.toLowerCase() === PRODUCT_CLUSTER_MAP)
+      .map((facet) => `product_cluster/${facet.value}`)
+    ;
 
     const body: NewtailRequest = {
       term: args.query,
@@ -143,7 +143,7 @@ export async function newtailSponsoredProducts(
       placements: definePlacements(adsAmount, args.placement),
       user_id: args.userId,
       session_id: hasMacId ? args.macId : DEFAULT_SESSION_ID,
-      tags,
+      tags: (tags && tags.length > 0) ? tags : undefined,
       product_sku: args.skuId,
       brand_name: brandName,
     }

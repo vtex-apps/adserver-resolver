@@ -25,6 +25,7 @@ class Newtail extends ExternalClient {
         ...body,
       })
       .then((response) => {
+        console.log('response in client', response)
         if (response.validations && response.validations.length > 0) {
           throw new Error('Newtail validation error')
         }
