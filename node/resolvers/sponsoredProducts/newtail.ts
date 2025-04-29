@@ -5,7 +5,7 @@ import type {
   PlacementResponse,
   NewtailRequest,
 } from '../../typings/Newtail'
-import {PRODUCT_CLUSTER_MAP} from '../../utils/constants'
+import {BRAND_FACET_KEYS, PRODUCT_CLUSTER_MAP} from '../../utils/constants'
 import {getNewtailPublisherId} from '../../utils/getNewtailPublisherID'
 import { shouldFetchSponsoredProducts } from '../../utils/shouldFetchSponsoredProducts'
 
@@ -123,9 +123,9 @@ export async function newtailSponsoredProducts(
         : undefined;
 
     const brandName =
-      args?.selectedFacets?.length && args.selectedFacets.some((facet) => facet.key === "b")
+      args?.selectedFacets?.length && args.selectedFacets.some((facet) => BRAND_FACET_KEYS.includes(facet.key?.toLowerCase()))
         ? args.selectedFacets
-            .filter((facet) => facet.key === "b")
+            .filter((facet) => BRAND_FACET_KEYS.includes(facet.key?.toLowerCase()))
             .map((facet) => facet.value)[0]
         : undefined;
 
