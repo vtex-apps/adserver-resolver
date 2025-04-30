@@ -122,12 +122,10 @@ export async function newtailSponsoredProducts(
             .join(" > ")
         : undefined;
 
-    const brandName =
-      args?.selectedFacets?.length && args.selectedFacets.some((facet) => BRAND_FACET_KEYS.includes(facet.key?.toLowerCase()))
-        ? args.selectedFacets
-            .filter((facet) => BRAND_FACET_KEYS.includes(facet.key?.toLowerCase()))
-            .map((facet) => facet.value)[0]
-        : undefined;
+    const brandName = args
+        ?.selectedFacets
+        ?.filter((facet) => BRAND_FACET_KEYS.includes(facet.key?.toLowerCase()))
+        .map((facet) => facet.value)[0]
 
     const context = args?.query?.length ? 'search' : (categoryName ? 'category' : (brandName ? 'brand_page' : 'home'))
 
