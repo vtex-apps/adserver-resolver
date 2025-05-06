@@ -8,7 +8,8 @@
     "node": "6.x"
   },
   "dependencies": {
-    "vtex.adserver-graphql": "0.x"
+    "vtex.adserver-graphql": "0.x",
+    "vtex.catalog-api-proxy": "0.x"
   },
   "policies": [
     {
@@ -34,6 +35,12 @@
         "path": "*"
       },
       "name": "outbound-access"
+    },
+    {
+      "name": "vtex.catalog-api-proxy:catalog-proxy"
+    },
+    {
+      "name": "vtex.catalog-api-proxy:authenticated-catalog-proxy"
     }
   ],
   "settingsSchema": {

@@ -3,6 +3,7 @@ import { IOClients } from '@vtex/api'
 import AdServer from './AdServer'
 import Checkout from './Checkout'
 import Newtail from './Newtail'
+import { Search } from './Search'
 
 export class Clients extends IOClients {
   public get adServer() {
@@ -15,5 +16,9 @@ export class Clients extends IOClients {
 
   public get checkout() {
     return this.getOrSet('checkout', Checkout)
+  }
+
+  public get search() {
+    return this.getOrSet('search', Search)
   }
 }

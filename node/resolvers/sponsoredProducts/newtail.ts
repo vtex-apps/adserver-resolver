@@ -5,7 +5,7 @@ import type {
   PlacementResponse,
   NewtailRequest,
 } from '../../typings/Newtail'
-import {BRAND_FACET_KEYS, PRODUCT_CLUSTER_MAP} from '../../utils/constants'
+import {BRAND_FACET_KEYS, CATEGORY_FACET_KEYS, PRODUCT_CLUSTER_MAP} from '../../utils/constants'
 import {getNewtailPublisherId} from '../../utils/getNewtailPublisherID'
 import { shouldFetchSponsoredProducts } from '../../utils/shouldFetchSponsoredProducts'
 
@@ -100,11 +100,15 @@ const validateParams = (args: SponsoredProductsParams, ctx: Context): boolean =>
     return false
   }
 }
+
 export async function newtailSponsoredProducts(
   _: unknown,
   args: SponsoredProductsParams,
   ctx: Context
 ): Promise<SponsoredProduct[]> {
+  const {
+    vtex: { logger },
+  } = ctx
 
   const hasMacId = validateParams(args, ctx)
 
@@ -114,13 +118,37 @@ export async function newtailSponsoredProducts(
   try {
     const adsAmount = args.sponsoredCount ?? DEFAULT_SPONSORED_COUNT
 
-    const categoryName =
-      args?.selectedFacets?.length && args.selectedFacets.some((facet) => (facet.key.startsWith("category") || facet.key === "c" || facet.key === "categoria"))
-        ? args.selectedFacets
-            .filter((facet) => (facet.key.startsWith("category") || facet.key === "c" || facet.key === "categoria"))
-            .map((facet) => facet.value)
-            .join(" > ")
-        : undefined;
+    const categoryFacets = args?.selectedFacets?.filter(
+      (facet) => CATEGORY_FACET_KEYS.includes(facet.key?.toLowerCase())
+    ) || []
+
+    let categoryName: string | undefined
+    if (categoryFacets.length > 0) {
+      try {
+        const categoryValues = await Promise.all(
+          categoryFacets.map(async (facet) => {
+            const value = facet.value?.toLowerCase() || ''
+            const isNumericCategoryId = /^\d+$/.test(facet.value || '')
+            
+            if (isNumericCategoryId) {
+              try {
+                const cat = await ctx.clients.search.category(value)
+                return cat?.name || value
+              } catch (error) {
+                logger.error(`Error fetching category ${value} by ID: ${error}`)
+                return value
+              }
+            }
+            return value
+          })
+        )
+
+        categoryName = categoryValues.filter(Boolean).join(" > ")
+      } catch (error) {
+        logger.error(`Error processing category facets: ${error}`)
+        categoryName = undefined
+      }
+    }
 
     const brandName = args
         ?.selectedFacets
@@ -151,6 +179,7 @@ export async function newtailSponsoredProducts(
 
     return mapSponsoredProduct(newtailResponse, hasMacId, args.placement)
   } catch (error) {
+    logger.error(`Error fetching sponsored products: ${error}`)
     if (error.response?.data === Newtail.ERROR_MESSAGES.AD_NOT_FOUND) return []
 
     throw error
