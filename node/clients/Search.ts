@@ -45,8 +45,7 @@ import {
       const pageTypePath = encodeURI(path.startsWith('/') ? path.substr(1) : path)
   
       const pageTypeQuery = !query || query.startsWith('?') ? query : `?${query}`
-  
-      console.log(`PAGETYPEEE: \n/pub/portal/pagetype/${pageTypePath}${pageTypeQuery}`)
+
       return this.get<SearchPageTypeResponse>(
         `/pub/portal/pagetype/${pageTypePath}${pageTypeQuery}`,
         { metric: 'search-pagetype' }
