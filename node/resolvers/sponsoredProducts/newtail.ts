@@ -127,8 +127,8 @@ export async function newtailSponsoredProducts(
       try {
         const categoryValues = await Promise.all(
           categoryFacets.map(async (facet) => {
-            const value = facet.value?.toLowerCase() || ''
-            const isNumericCategoryId = /^\d+$/.test(facet.value || '')
+            const value = facet.value
+            const isNumericCategoryId = /^\d+$/.test(value || '')
             
             if (isNumericCategoryId) {
               try {
