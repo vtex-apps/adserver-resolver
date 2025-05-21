@@ -1,7 +1,6 @@
-import {shouldUseNewtail} from "../../utils/shouldUseNewtail";
-import {newtailSponsoredProducts} from "./newtail";
-import {vtexSponsoredProducts} from "./vtex";
-
+import { shouldUseNewtail } from '../../utils/shouldUseNewtail'
+import { newtailSponsoredProducts } from './newtail'
+import { vtexSponsoredProducts } from './vtex'
 
 export async function sponsoredProducts(
   arg: unknown,

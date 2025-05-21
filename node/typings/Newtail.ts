@@ -1,7 +1,10 @@
+export type AdContext = 'search' | 'home' | 'category' | 'brand_page'
+
 export type NewtailRequest = {
   term?: string
-  context?: 'search' | 'home' | 'category' | 'brand_page',
-  category_name?: string,
+  context?: AdContext
+  category_name?: string
+  skus?: string[]
   placements?: { [key: string]: NewtailPlacement }
   user_id?: string
   session_id?: string

@@ -1,4 +1,4 @@
-import {PRODUCT_CLUSTER_MAP, RELEVANCE_DESC_SORT_STR} from "./constants"
+import { PRODUCT_CLUSTER_MAP, RELEVANCE_DESC_SORT_STR } from './constants'
 
 const isSortedByRelevance = (args: SearchParams) => {
   return !args.sort || args.sort?.toLowerCase() === RELEVANCE_DESC_SORT_STR

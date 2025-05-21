@@ -4,10 +4,12 @@ import type {
   NewtailPlacement,
   PlacementResponse,
   NewtailRequest,
+  AdContext,
 } from '../../typings/Newtail'
-import {BRAND_FACET_KEYS, PRODUCT_CLUSTER_MAP} from '../../utils/constants'
-import {getNewtailPublisherId} from '../../utils/getNewtailPublisherID'
+import { BRAND_FACET_KEYS, PRODUCT_CLUSTER_MAP } from '../../utils/constants'
+import { getNewtailPublisherId } from '../../utils/getNewtailPublisherID'
 import { shouldFetchSponsoredProducts } from '../../utils/shouldFetchSponsoredProducts'
+import { trim } from '../../utils/trim'
 
 const RULE_ID = 'sponsoredProduct'
 const PRODUCT_SKU_IDENTIFIER_FIELD = 'skuId'
@@ -31,7 +33,7 @@ const removeTrackingParamsFromUrl = (eventUrl: string): string => {
   const url = new URL(eventUrl)
   const paramsToRemove = ['user_id', 'session_id', 'event_id']
 
-  paramsToRemove.forEach(param => {
+  paramsToRemove.forEach((param) => {
     url.searchParams.delete(param)
   })
 
@@ -41,7 +43,7 @@ const removeTrackingParamsFromUrl = (eventUrl: string): string => {
 const mapSponsoredProduct = (
   newtailResponse: NewtailResponse,
   requestHadSessionId: boolean,
-  placement = DEFAULT_PLACEMENT_NAME,
+  placement = DEFAULT_PLACEMENT_NAME
 ): SponsoredProduct[] => {
   const placementList: PlacementResponse[] = getPlacementList(
     newtailResponse,
@@ -54,7 +56,11 @@ const mapSponsoredProduct = (
     ({ product_sku, impression_url, seller_id, product_metadata }) => {
       const advertisement = {
         campaignId: DEFAULT_CAMPAIGN_ID,
-        adId: encodeBase64(requestHadSessionId ? impression_url : removeTrackingParamsFromUrl(impression_url)),
+        adId: encodeBase64(
+          requestHadSessionId
+            ? impression_url
+            : removeTrackingParamsFromUrl(impression_url)
+        ),
         actionCost: 0.0,
 
         adRequestId: newtailResponse?.request_id,
@@ -89,67 +95,118 @@ const definePlacements = (
   return placements
 }
 
-const validateParams = (args: SponsoredProductsParams, ctx: Context): boolean => {
+const validateParams = (
+  args: SponsoredProductsParams,
+  ctx: Context
+): boolean => {
   const {
     vtex: { logger },
   } = ctx
 
   if (args.macId) return true
-  else {
-    logger.warn("macId was not provided.")
-    return false
-  }
+
+  logger.warn('macId was not provided.')
+
+  return false
 }
+
+export const SKU_ID_PREFIX = 'sku.id:'
+export const getSkus = (query: string | undefined): string[] | undefined => {
+  if (query?.startsWith(SKU_ID_PREFIX)) {
+    return trim(query?.substring(SKU_ID_PREFIX.length), ';').split(';')
+  }
+
+  return undefined
+}
+
+export const getContext = (
+  term: string | undefined,
+  categoryName: string | undefined,
+  brandName: string | undefined
+): AdContext => {
+  if (term) {
+    return 'search'
+  }
+
+  if (categoryName) {
+    return 'category'
+  }
+
+  if (brandName) {
+    return 'brand_page'
+  }
+
+  return 'home'
+}
+
 export async function newtailSponsoredProducts(
   _: unknown,
   args: SponsoredProductsParams,
   ctx: Context
 ): Promise<SponsoredProduct[]> {
-
   const hasMacId = validateParams(args, ctx)
 
   const shouldFetch = await shouldFetchSponsoredProducts(args, ctx)
+
   if (!shouldFetch) return []
 
   try {
     const adsAmount = args.sponsoredCount ?? DEFAULT_SPONSORED_COUNT
 
     const categoryName =
-      args?.selectedFacets?.length && args.selectedFacets.some((facet) => (facet.key.startsWith("category") || facet.key === "c" || facet.key === "categoria"))
+      args?.selectedFacets?.length &&
+      args.selectedFacets.some(
+        (facet) =>
+          facet.key.startsWith('category') ||
+          facet.key === 'c' ||
+          facet.key === 'categoria'
+      )
         ? args.selectedFacets
-            .filter((facet) => (facet.key.startsWith("category") || facet.key === "c" || facet.key === "categoria"))
+            .filter(
+              (facet) =>
+                facet.key.startsWith('category') ||
+                facet.key === 'c' ||
+                facet.key === 'categoria'
+            )
             .map((facet) => facet.value)
-            .join(" > ")
-        : undefined;
+            .join(' > ')
+        : undefined
 
-    const brandName = args
-        ?.selectedFacets
-        ?.filter((facet) => BRAND_FACET_KEYS.includes(facet.key?.toLowerCase()))
-        .map((facet) => facet.value)[0]
-
-    const context = args?.query?.length ? 'search' : (categoryName ? 'category' : (brandName ? 'brand_page' : 'home'))
+    const brandName = args?.selectedFacets
+      ?.filter((facet) => BRAND_FACET_KEYS.includes(facet.key?.toLowerCase()))
+      .map((facet) => facet.value)[0]
 
     const tags = args.selectedFacets
       ?.filter((facet) => facet.key?.toLowerCase() === PRODUCT_CLUSTER_MAP)
       .map((facet) => `product_cluster/${facet.value}`)
-    ;
+
+    const skus = getSkus(args.query)
+    // If SKUs are not null, this a recommendation query. So we should not set
+    // the query parameter. Instead, we just set the skus parameter.
+    const term = skus === undefined ? args.query : undefined
 
     const body: NewtailRequest = {
-      term: args.query,
-      context,
+      term,
+      context: getContext(categoryName, brandName, term),
       category_name: categoryName,
+      skus,
       placements: definePlacements(adsAmount, args.placement),
       user_id: args.userId,
       session_id: hasMacId ? args.macId : DEFAULT_SESSION_ID,
-      tags: (tags && tags?.length > 0) ? tags : undefined,
+      tags: tags && tags?.length > 0 ? tags : undefined,
       product_sku: args.skuId,
       brand_name: brandName,
     }
 
     const publisherId = await getNewtailPublisherId(ctx)
-    const newtailResponse = await ctx.clients.newtail.getSponsoredProducts(body, publisherId)
+    const newtailResponse = await ctx.clients.newtail.getSponsoredProducts(
+      body,
+      publisherId
+    )
 
-    return mapSponsoredProduct(newtailResponse, hasMacId, args.placement)
+    const res = mapSponsoredProduct(newtailResponse, hasMacId, args.placement)
+
+    return res
   } catch (error) {
     if (error.response?.data === Newtail.ERROR_MESSAGES.AD_NOT_FOUND) return []
 
