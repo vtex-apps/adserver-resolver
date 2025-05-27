@@ -5,9 +5,9 @@ const isSortedByRelevance = (args: SearchParams) => {
 }
 
 const queryHasProductClusters = (args: SearchParams) => {
-  const mapHasProductClusters = args.map?.toLowerCase() === PRODUCT_CLUSTER_MAP
+  const mapHasProductClusters = PRODUCT_CLUSTER_MAP.includes(args.map?.toLowerCase() ?? '')
   const facetsHaveProductClusters = args.selectedFacets?.some(
-    (facet) => facet.key?.toLowerCase() === PRODUCT_CLUSTER_MAP
+    (facet) => PRODUCT_CLUSTER_MAP.includes(facet.key?.toLowerCase())
   )
 
   return mapHasProductClusters || facetsHaveProductClusters

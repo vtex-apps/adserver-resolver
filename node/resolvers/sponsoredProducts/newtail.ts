@@ -130,7 +130,7 @@ export async function newtailSponsoredProducts(
     const context = args?.query?.length ? 'search' : (categoryName ? 'category' : (brandName ? 'brand_page' : 'home'))
 
     const tags = args.selectedFacets
-      ?.filter((facet) => facet.key?.toLowerCase() === PRODUCT_CLUSTER_MAP)
+      ?.filter((facet) => PRODUCT_CLUSTER_MAP.includes(facet.key?.toLowerCase()))
       .map((facet) => `product_cluster/${facet.value}`)
     ;
 
