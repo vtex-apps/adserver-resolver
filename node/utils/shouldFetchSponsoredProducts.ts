@@ -21,6 +21,10 @@ const shouldFetchOnProductClusers = async (ctx: Context) => {
   return settings?.enableAdsOnCollections ?? true
 }
 
+const isFirstPage = (args: SearchParams) => {
+  return args.page === undefined || args.page.toString() === '1'
+}
+
 /**
  * Determine whether or not to fetch sponsored products based on a few parameters:
  * 1. If the search is not sorted by relevance, don't fetch.
@@ -32,7 +36,11 @@ export const shouldFetchSponsoredProducts = async (
   ctx: Context
 ) => {
   if (!isSortedByRelevance(args)) return false
-  if (!queryHasProductClusters(args)) return true
+  if (!isFirstPage(args)) return false
+
+  if (!queryHasProductClusters(args)) {
+    return true
+  }
 
   return shouldFetchOnProductClusers(ctx)
 }
