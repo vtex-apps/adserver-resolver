@@ -127,7 +127,16 @@ export async function newtailSponsoredProducts(
         ?.filter((facet) => BRAND_FACET_KEYS.includes(facet.key?.toLowerCase()))
         .map((facet) => facet.value)[0]
 
-    const context = args?.query?.length ? 'search' : (categoryName ? 'category' : (brandName ? 'brand_page' : 'home'))
+    let context: NewtailRequest['context'] = 'home'
+    if (args?.query?.length) {
+      context = 'search'
+    } else if (categoryName) {
+      context = 'category'
+    } else if (brandName) {
+      context = 'brand_page'
+    } else if (args.skuId) {
+      context = 'product_page'
+    }
 
     const tags = args.selectedFacets
       ?.filter((facet) => PRODUCT_CLUSTER_MAP.includes(facet.key?.toLowerCase()))
