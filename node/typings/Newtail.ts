@@ -1,6 +1,6 @@
 export type NewtailRequest = {
   term?: string
-  context?: 'search' | 'home' | 'category' | 'brand_page',
+  context?: 'search' | 'home' | 'category' | 'brand_page' | 'product_page',
   category_name?: string,
   placements?: { [key: string]: NewtailPlacement }
   user_id?: string
