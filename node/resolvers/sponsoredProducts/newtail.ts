@@ -143,11 +143,13 @@ export async function newtailSponsoredProducts(
       .map((facet) => `product_cluster/${facet.value}`)
     ;
 
+    const placementName = args.placement ?? DEFAULT_PLACEMENT_NAME
+
     const body: NewtailRequest = {
       term: args.query,
       context,
       category_name: categoryName,
-      placements: definePlacements(adsAmount, args.placement),
+      placements: definePlacements(adsAmount, placementName),
       user_id: args.userId,
       session_id: hasMacId ? args.macId : DEFAULT_SESSION_ID,
       tags: (tags && tags?.length > 0) ? tags : undefined,
@@ -158,7 +160,7 @@ export async function newtailSponsoredProducts(
     const publisherId = await getNewtailPublisherId(ctx)
     const newtailResponse = await ctx.clients.newtail.getSponsoredProducts(body, publisherId)
 
-    return mapSponsoredProduct(newtailResponse, hasMacId, args.placement)
+    return mapSponsoredProduct(newtailResponse, hasMacId, placementName)
   } catch (error) {
     if (error.response?.data === Newtail.ERROR_MESSAGES.AD_NOT_FOUND) return []
 
