@@ -1,12 +1,23 @@
-import { newtailSponsoredProducts } from '../../resolvers/sponsoredProducts/newtail'
+import { resolvers } from '../../resolvers'
 import type { NewtailResponse } from '../../typings/Newtail'
-
-// Mock OpenTelemetry dependencies
-jest.mock('@vtex/diagnostics-nodejs', () => ({}))
 
 const getSponsoredProductsSpy = jest.fn()
 const getNewtailPublisherIdSpy = jest.fn()
 const getAppSettingsSpy = jest.fn()
+const shouldUseNewtailSpy = jest.fn()
+
+// Mock utility functions
+jest.mock('../../utils/shouldUseNewtail', () => ({
+  shouldUseNewtail: () => shouldUseNewtailSpy(),
+}))
+
+jest.mock('../../utils/getNewtailPublisherID', () => ({
+  getNewtailPublisherId: () => getNewtailPublisherIdSpy(),
+}))
+
+jest.mock('../../utils/shouldFetchSponsoredProducts', () => ({
+  shouldFetchSponsoredProducts: jest.fn().mockResolvedValue(true),
+}))
 
 const mockNewtailResponse: NewtailResponse = {
   query_at: '2026-02-23T12:00:00Z',
@@ -47,20 +58,15 @@ const defaultContext = {
   },
 }
 
-jest.mock('../../utils/getNewtailPublisherID', () => ({
-  getNewtailPublisherId: () => getNewtailPublisherIdSpy(),
-}))
-
-jest.mock('../../utils/shouldFetchSponsoredProducts', () => ({
-  shouldFetchSponsoredProducts: jest.fn().mockResolvedValue(true),
-}))
-
 describe('newtailSponsoredProducts - placement definition', () => {
+  const query = resolvers.Query.sponsoredProducts
+
   beforeEach(() => {
     jest.clearAllMocks()
     getSponsoredProductsSpy.mockResolvedValue(mockNewtailResponse)
     getNewtailPublisherIdSpy.mockResolvedValue('publisher-123')
     getAppSettingsSpy.mockResolvedValue({ enableAdsOnCollections: true })
+    shouldUseNewtailSpy.mockResolvedValue(true)
   })
 
   describe('when placement is null', () => {
@@ -76,7 +82,7 @@ describe('newtailSponsoredProducts - placement definition', () => {
 
     it('should use "ads_newtail" as placement key instead of "null"', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await newtailSponsoredProducts({}, args, defaultContext as any)
+      await query({}, args, defaultContext as any)
 
       const callArgs = getSponsoredProductsSpy.mock.calls[0][0]
       
@@ -104,7 +110,7 @@ describe('newtailSponsoredProducts - placement definition', () => {
 
     it('should use "ads_newtail" as placement key', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await newtailSponsoredProducts({}, args, defaultContext as any)
+      await query({}, args, defaultContext as any)
 
       const callArgs = getSponsoredProductsSpy.mock.calls[0][0]
       
@@ -129,7 +135,7 @@ describe('newtailSponsoredProducts - placement definition', () => {
 
     it('should use the provided placement name', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await newtailSponsoredProducts({}, args, defaultContext as any)
+      await query({}, args, defaultContext as any)
 
       const callArgs = getSponsoredProductsSpy.mock.calls[0][0]
       
