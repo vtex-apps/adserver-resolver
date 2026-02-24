@@ -3,7 +3,7 @@ export type AdServerRequest = {
   count: number
   searchParams: AdServerSearchParams
   userId?: string
-  placement?: string
+  placement?: string | null
 }
 
 export type AdServerResponse = {
